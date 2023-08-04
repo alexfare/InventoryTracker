@@ -20,6 +20,9 @@ Dim Worksheet_Set        ' variable used for selecting and storing the active wo
 Dim Update_Button_Enable As Boolean        ' to store update enable flag after search
 Dim GN_Verify
 Dim currrentUser As String
+Dim ActionLog As String
+Dim AuditTime As String
+Dim AuditUser As String
 
 Private Sub UserForm_Activate()
 '/Positioning /'
@@ -84,6 +87,11 @@ Public Sub Search_Button_Click()
         lblReceivedIn = ws.Cells(r, "T")
         lblOrderEntry = ws.Cells(r, "S")
         lblUsageReport = ws.Cells(r, "R")
+        
+        ActionLog = "Searched"
+        AuditTime = Now
+        AuditUser = Application.userName
+        auditLog
                 
         '/Status/'
         statusLabel_fix.Caption = "Status:"
@@ -92,6 +100,7 @@ Public Sub Search_Button_Click()
         
         '/Enables Edit/'
         Update_Button_Enable = True
+         
     End If
 End Sub
 
@@ -135,7 +144,6 @@ Private Sub Clear_Form()
     lblUsageReport = ""
     lblOrderEntry = ""
     lblReceivedIn = ""
-    
 End Sub
 
 '/------- Receive In Button -------/'
@@ -214,6 +222,11 @@ Private Sub Update_Worksheet()
     List_Select = "CreatedByAlexFare"        ' Tab name
     Set ws = Sheets(List_Select)
     Set Worksheet_Set = ws
+    
+    ActionLog = "Received In"
+    AuditTime = Now
+    AuditUser = Application.userName
+    auditLog
     '/ End Audit Log /'
     
     '/Status/'
@@ -382,6 +395,11 @@ If Update_Button_Enable = True Then
     List_Select = "CreatedByAlexFare"        ' Tab name
     Set ws = Sheets(List_Select)
     Set Worksheet_Set = ws
+    
+    ActionLog = "Order Entry"
+    AuditTime = Now
+    AuditUser = Application.userName
+    auditLog
     '/ End Audit Log /'
     
     '/Status/'
@@ -459,10 +477,21 @@ If Update_Button_Enable = True Then
     UpdateCountPlusOne = UpdateCount + 1
     ws.Range("B50") = UpdateCountPlusOne
     
+    '/Status/'
+        statusLabel_fix.Caption = "Status:"
+        statusLabelLog.Caption = "" + txtUse + " " + gnString + " Has been consumed.."
+        Status
+        
     '/Prevent Issues in the future, Call back the main page/'
     List_Select = "CreatedByAlexFare"        ' Tab name
     Set ws = Sheets(List_Select)
     Set Worksheet_Set = ws
+    
+    ActionLog = "Usage Report"
+    AuditTime = Now
+    AuditUser = Application.userName
+    'AuditStatus
+    auditLog
     '/ End Audit Log /'
     
     '/Status/'
@@ -478,3 +507,26 @@ Else
 End If
 End Sub
 
+'/ ------- Audit Log ------- /'
+Private Sub auditLog()
+    Dim Worksheet_Set        ' variable used for selecting and storing the active worksheet
+    Dim ws          As Worksheet
+    Dim List_Select
+    List_Select = "Audit"        ' Tab name
+    Set ws = Sheets(List_Select)
+    Set Worksheet_Set = ws
+    Dim auditLog As String
+    Dim AuditAdd As String
+    Dim AuditDate As String
+    
+    auditLog = ws.Range("A2")
+    AuditDate = Now
+    AuditAdd = " ||| Date: " + AuditDate + " User: " + AuditUser + " Action: " + ActionLog + " ||| "
+    auditLog = auditLog + " " + AuditAdd
+    ws.Range("A2") = auditLog
+End Sub
+
+Private Sub auditBTN_Click()
+    Unload Menu
+    Worksheets("Audit").Activate
+End Sub
