@@ -1,0 +1,4 @@
+v1.0.2
+Fixed Admin Panel login
+Fixed CompanyProfile Display
+Updated Format Menu

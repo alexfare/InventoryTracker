@@ -54,170 +54,10 @@ Private Sub Gage_Number_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Sh
     End If
 End Sub
 
-Public Sub Search_Button_Click()
-    ' clear previous data from form, except "Gage Number"
-    ' --------------------------------------------------------
-    Dim Gage_Number_Save
-    Gage_Number_Save = Gage_Number
-    Clear_Form
-    Gage_Number = Gage_Number_Save
-    ' ---------------------------------------------------------
-    
-    Dim ws          As Worksheet
-    
-    List_Select = "CreatedByAlexFare"
-    Set ws = Sheets(List_Select)
-    Set Worksheet_Set = ws
-    
-    If IsError(Application.Match(IIf(IsNumeric(Gage_Number), Val(Gage_Number), Gage_Number), ws.Columns(1), 0)) Then
-        Update_Button_Enable = False
-        ErrMsg
-    Else
-        r = Application.Match(IIf(IsNumeric(Gage_Number), Val(Gage_Number), Gage_Number), ws.Columns(1), 0)
-        GN_Verify = Gage_Number
-        Descriptiontxt = ws.Cells(r, "B")
-        
-        '/ Audit Log
-        DateEdit = ws.Cells(r, "AM") 'Update Last searched
-        ws.Cells(r, "AM") = Now        'Update Last searched
-        lblSearchedDate = DateEdit 'Update Last searched
-        lblDateEdit = ws.Cells(r, "AL")
-        lastUser = ws.Cells(r, "AN")
-        lblReceivedIn = ws.Cells(r, "T")
-        lblOrderEntry = ws.Cells(r, "S")
-        lblUsageReport = ws.Cells(r, "R")
-        
-        '/Status/'
-        statusLabel.Caption = "Status:"
-        statusLabelLog.Caption = "Searching"
-        Status
-
-        Update_Button_Enable = True
-    End If
-End Sub
-
-Sub ErrMsg()
-    MsgBox ("Gage Number Not Found"), , "Not Found"
-    Gage_Number.SetFocus
-End Sub
-
-Sub ErrMsg_Duplicate()
-    MsgBox ("Gage number already in use"), , "Duplicate"
-    Gage_Number.SetFocus
-End Sub
-
-Private Sub Update_Button_Click()
-    If Update_Button_Enable = True Then
-        If GN_Verify = Gage_Number Then
-            Update_Worksheet
-        Else
-            MSG_Verify_Update
-        End If
-    Else
-        MsgBox ("Must search For entry before updating"), , "Nothing To Update"
-    End If
-End Sub
-Private Sub Update_Worksheet()
-    If Update_Button_Enable = True Then
-        Dim gnString As String
-        Set ws = Worksheet_Set
-        If IsNumeric(Gage_Number) Then
-            gnString = Val(Gage_Number.Value)
-        Else
-            gnString = Gage_Number
-        End If
-        '/ Audit
-        ws.Cells(r, "A") = gnString
-        ws.Cells(r, "B") = Descriptiontxt
-        ws.Cells(r, "C") = inventoryTxt
-        ws.Cells(r, "D") = onOrder
-        
-        '/ Audit Log
-        currrentUser = Application.userName
-        lastUser = currrentUser
-        ws.Cells(r, "AN") = lastUser
-        ws.Cells(r, "AL") = lblDateEdit
-        lblReceivedIn = Now
-        ws.Cells(r, "T") = lblReceivedIn
-        
-        '/Status/'
-        statusLabel.Caption = "Status:"
-        statusLabelLog.Caption = "Updated"
-        Status
-        
-    Else
-        MsgBox ("Must search For entry before updating"), , "Nothing To Update"
-        
-    End If
-    
-    'Update_Button_Enable = False 'Remove ' if you want to require searching again after an update.
-    
-End Sub
-
-Sub MSG_Verify_Update()
-    
-    MSG1 = MsgBox("Are you sure you want To change the Gage ID?", vbYesNo, "Verify")
-    
-    If MSG1 = vbYes Then
-        Update_Worksheet
-    Else
-        Gage_Number = GN_Verify
-    End If
-    
-End Sub
-
-Private Sub Clear_Form()
-    Gage_Number = ""
-    Descriptiontxt = ""
-    inventoryTxt = ""
-    onOrder = ""
-    
-    '/ReceiveIn/'
-    txtProduct = ""
-    txtCurrentQty = ""
-    receiveInput = ""
-    
-    '/OnOrder/'
-    OrderProductTxt = ""
-    currentInventory = ""
-    currentOnOrdertxt = ""
-    orderQty = ""
-    
-    '/Usage/'
-    UsageProduct = ""
-    UsageCurrent = ""
-    UsageOnOrder = ""
-    txtUse = ""
-    
-    '/Audit Log/'
-    lastUser = ""
-    lblDateEdit = ""
-    lblSearchedDate = ""
-    lblUsageReport = ""
-    lblOrderEntry = ""
-    lblReceivedIn = ""
-    
-End Sub
-
-Private Sub btnClear_Click()
-    Update_Button_Enable = False
-    Clear_Form
-End Sub
-
 Sub CheckForUpdate_Click()
     Dim url         As String
     url = "https://github.com/alexfare/GageCalibrationTracker"
     ActiveWorkbook.FollowHyperlink url
-End Sub
-
-Private Sub btnClose_Click()
-    Unload AdminForm
-    
-    '/Save Logged In User For The Session /'
-    List_Select = "Admin"        ' Tab name
-    Set ws = Sheets(List_Select)
-    Set Worksheet_Set = ws
-    ws.Range("B55") = "2"       ' 1 = Required | 2 = Not Required
 End Sub
 
 Private Sub btnCreateAccount_click()
@@ -231,8 +71,7 @@ Private Sub btnUpdateUser_click()
 End Sub
 
 Private Sub btnDevMode_click()
-    Application.DisplayFullScreen = False
-    Application.DisplayFormulaBar = True
+    MsgBox "DevMode Removed."
 End Sub
 
 Private Sub btnAbout_Click()
@@ -240,12 +79,12 @@ Private Sub btnAbout_Click()
 End Sub
 
 Private Sub auditBTN_Click()
-    Audit.Show
+    Unload Menu
+    Worksheets("Audit").Activate
 End Sub
 
 Private Sub btnFormat_Click()
-    Unload AdminForm
-    Worksheets("Format").Activate
+    Format_Form.Show
 End Sub
 
 Private Sub btnLogout_Click()
@@ -256,3 +95,6 @@ Private Sub btnLogout_Click()
         Unload AdminForm
 End Sub
 
+Private Sub btnCompanyProfile_Click()
+    CompanyProfile.Show
+End Sub
