@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} AdminForm 
    Caption         =   "Admin Panel  - Created By Alex Fare"
-   ClientHeight    =   3960
+   ClientHeight    =   4005
    ClientLeft      =   120
    ClientTop       =   465
-   ClientWidth     =   6405
+   ClientWidth     =   6375
    OleObjectBlob   =   "AdminForm.frx":0000
    StartUpPosition =   2  'CenterScreen
 End
@@ -56,7 +56,7 @@ End Sub
 
 Sub CheckForUpdate_Click()
     Dim url         As String
-    url = "https://github.com/alexfare/GageCalibrationTracker"
+    url = "https://github.com/alexfare/InventoryTracker"
     ActiveWorkbook.FollowHyperlink url
 End Sub
 
@@ -71,7 +71,7 @@ Private Sub btnUpdateUser_click()
 End Sub
 
 Private Sub btnDevMode_click()
-    MsgBox "DevMode Removed."
+    MsgBox "DevMode Coming Soon."
 End Sub
 
 Private Sub btnAbout_Click()

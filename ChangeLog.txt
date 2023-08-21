@@ -1,3 +1,9 @@
+v1.0.3
+Fixed error causing file corruption.
+Added Auto-Save feature to actions performed. (Disable Excels built in auto save)
+Signed Document
+Updated Admin Panel
+
 v1.0.2
 Fixed Admin Panel login
 Fixed CompanyProfile Display
