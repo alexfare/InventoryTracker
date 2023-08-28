@@ -27,7 +27,7 @@ End Sub
 
 Private Sub btnSubmit_Click()
     ' Check if the user provided input
-    If inputName <> "" And inputEmail <> "" And inputDescription <> "" Then
+    If inputName <> "" And inputDescription <> "" Then
     Send_Emails
     Else
         MsgBox "Please provide all the required information.", vbExclamation

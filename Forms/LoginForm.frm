@@ -29,6 +29,15 @@ Private Sub inputPass_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shif
 End Sub
 
 Private Sub btnLogin_Click()
+    ' Check if the user provided input
+    If inputUser <> "" And inputPass <> "" Then
+    Login_Sub
+    Else
+        MsgBox "Please provide Username & Password.", vbExclamation
+    End If
+End Sub
+
+Private Sub Login_Sub()
     '/ Hash /'
     s = inputPass
     
@@ -51,19 +60,7 @@ Private Sub btnLogin_Click()
     
     savePass = sH
     '/ Hash /'
-    
-    'User set up
-    If inputUser.Value = "" Then
-        MsgBox "User Cannot be Blank.", vbInformation, ""
-        Exit Sub
-    End If
-    
-    'Password set up
-    If inputPass.Value = "" Then
-        MsgBox "Password Cannot be Blank!", vbInformation, ""
-        Exit Sub
-    End If
-    
+
     Dim inputUsername As String
     Dim Password As Variant
     
@@ -88,22 +85,20 @@ Private Sub btnLogin_Click()
     'Loop through each cell in Column A and check if the value matches the search value
     For i = 1 To lastRow
         If ws.Cells(i, "A").Value = searchValue Then
-            'If the value exists, display a message box and exit the sub
-            'MsgBox "Value exists in Column A."
             une = True
         End If
     Next i
     If une = False Then
-        MsgBox "Login Failed, Wrong Username Or Password."
-        Exit Sub
+        Failed_Login
+    Exit Sub
     End If
         
     Password = Application.WorksheetFunction.VLookup(inputUsername, Sheets("Credentials").Range("A:B"), 2, 0)
     PassCompare = savePass
     
     If Password <> PassCompare Then
-        MsgBox "Login Failed, Wrong Username Or Password", vbInformation, "Wrong Password"
-        Exit Sub
+        Failed_Login
+    Exit Sub
     End If
     
     If Password = PassCompare Then
@@ -133,3 +128,6 @@ Private Sub btnBack_click()
     Menu.Show
 End Sub
 
+Private Sub Failed_Login()
+    MsgBox "Login Failed, Wrong Username Or Password.", vbInformation
+End Sub

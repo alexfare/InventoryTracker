@@ -29,6 +29,14 @@ Private Sub UserForm_Activate()
     Me.Left = Application.Left + (0.5 * Application.Width) - (0.5 * Me.Width)
     Me.Top = Application.Top + (0.5 * Application.Height) - (0.5 * Me.Height)
 '/End Positioning /'
+
+    Dim Worksheet_Set
+    Dim ws As Worksheet
+    Dim List_Select
+    List_Select = "CreatedByAlexFare"
+    Set ws = Sheets(List_Select)
+    Set Worksheet_Set = ws
+    vDisplay = ws.Range("D1")
 End Sub
 
 Private Sub Gage_Number_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shift As Integer)
@@ -100,7 +108,6 @@ Public Sub Search_Button_Click()
         
         '/Enables Edit/'
         Update_Button_Enable = True
-         
     End If
 End Sub
 
@@ -233,6 +240,7 @@ Private Sub Update_Worksheet()
         statusLabel_fix.Caption = "Status:"
         statusLabelLog.Caption = "Receiving In " + receiveInput + " " + gnString
         Status
+        AutoSave
         
     '/Update Menu
     receiveInput = ""
@@ -323,6 +331,9 @@ End Sub
 
 Private Sub AutoSave()
     ThisWorkbook.Save
+    statusLabel_fix.Caption = "Status:"
+    statusLabelLog.Caption = "Auto-Saving..."
+    Status
 End Sub
 
 '/ ------- On-Order Tab ------- /'
@@ -406,6 +417,7 @@ If Update_Button_Enable = True Then
         statusLabel_fix.Caption = "Status:"
         statusLabelLog.Caption = "" + orderQty + " " + gnString + " Added to On-Order!"
         Status
+        AutoSave
         
     '/Update Menu
     orderQty = ""
@@ -498,6 +510,7 @@ If Update_Button_Enable = True Then
         statusLabel_fix.Caption = "Status:"
         statusLabelLog.Caption = "" + txtUse + " " + gnString + " Has been consumed.."
         Status
+        AutoSave
         
     '/Update Menu
     txtUse = ""

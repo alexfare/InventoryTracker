@@ -1,3 +1,11 @@
+v1.0.4
+Added Version display to Menu & Admin Menu.
+Fixed ReportIssue requiring Email.
+Fixed crash that happened if you tried to login without entering any information.
+Fixed crash that happened when formatting worksheet.
+Added additional warning when formatting.
+
+
 v1.0.3
 Fixed error causing file corruption.
 Added Auto-Save feature to actions performed. (Disable Excels built in auto save)
