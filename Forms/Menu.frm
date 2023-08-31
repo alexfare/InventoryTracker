@@ -111,15 +111,6 @@ Public Sub Search_Button_Click()
     End If
 End Sub
 
-'/ ------- Error Handles ------- /'
-Sub ErrMsg()
-    MsgBox ("Gage Number Not Found"), , "Not Found"
-End Sub
-
-Sub ErrMsg_Duplicate()
-    MsgBox ("Gage number already in use"), , "Duplicate"
-End Sub
-
 '/ ------- Clear Button ------- /'
 Private Sub Clear_Form()
     Gage_Number = ""
@@ -162,7 +153,7 @@ Private Sub Update_Button_Click()
             MSG_Verify_Update
         End If
     Else
-        MsgBox ("Must search For entry before updating"), , "Nothing To Update"
+        ErrMsg_Search
     End If
 End Sub
 
@@ -246,7 +237,7 @@ Private Sub Update_Worksheet()
     receiveInput = ""
     Search_Button_Click
 Else
-    MsgBox ("Must search For entry before updating"), , "Nothing To Update"
+    ErrMsg_Search
 End If
 End Sub
 
@@ -345,7 +336,7 @@ Private Sub OnOrder_Button_Click()
             MSG_Verify_Update
         End If
     Else
-        MsgBox ("Must search For entry before updating"), , "Nothing To Update"
+        ErrMsg_Search
     End If
 End Sub
 
@@ -423,7 +414,7 @@ If Update_Button_Enable = True Then
     orderQty = ""
     Search_Button_Click
 Else
-    MsgBox ("Must search For entry before updating"), , "Nothing To Update"
+    ErrMsg_Search
 End If
 End Sub
 
@@ -436,7 +427,7 @@ Private Sub Usage_Button_Click()
             MSG_Verify_Update
         End If
     Else
-        MsgBox ("Must search For entry before updating"), , "Nothing To Update"
+        ErrMsg_Search
     End If
 End Sub
 
@@ -516,7 +507,7 @@ If Update_Button_Enable = True Then
     txtUse = ""
     Search_Button_Click
 Else
-    MsgBox ("Must search For entry before updating"), , "Nothing To Update"
+    ErrMsg_Search
 End If
 End Sub
 
@@ -542,4 +533,18 @@ End Sub
 Private Sub auditBTN_Click()
     Unload Menu
     Worksheets("Audit").Activate
+End Sub
+
+'/ ------- Error Handles ------- /'
+Sub ErrMsg()
+    MsgBox (""), vbInformation, "Not Found"
+End Sub
+
+Sub ErrMsg_Duplicate()
+    MsgBox ("Gage number already in use"), vbInformation, "Duplicate"
+End Sub
+
+Sub ErrMsg_Search()
+    MsgBox ("Must search for entry before updating."), vbInformation, "Error"
+    Clear_Form
 End Sub

@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ChangePassword 
    Caption         =   "Change Password"
-   ClientHeight    =   2925
+   ClientHeight    =   2520
    ClientLeft      =   120
    ClientTop       =   465
-   ClientWidth     =   3615
+   ClientWidth     =   3645
    OleObjectBlob   =   "ChangePassword.frx":0000
    StartUpPosition =   2  'CenterScreen
 End
@@ -25,20 +25,13 @@ Private Sub UserForm_Activate()
 '/End Positioning /'
 End Sub
 
-Private Sub inputUser_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shift As Integer)
+Private Sub inputPass_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shift As Integer)
     If KeyCode = vbKeyReturn Then
-        btnUpdate_Click
+        btnChangePassword_Click
     End If
 End Sub
 
 Public Sub Search_Button_Click()
-    
-    ' clear previous data from form, except "Gage Number"
-    ' --------------------------------------------------------
-    inputPass = ""
-    Descriptiontxt = ""
-    ' ---------------------------------------------------------
-    
     Dim ws As Worksheet
     
     List_Select = "Credentials"
@@ -57,11 +50,19 @@ Public Sub Search_Button_Click()
         statusLabel.Caption = "Status:"
         statusLabelLog.Caption = "Searching..."
         Status
+        btnUpdate
     End If
-    inputUser.SetFocus
 End Sub
 
-Private Sub btnUpdate_Click()
+Private Sub btnChangePassword_Click()
+    If inputUser <> "" And inputPass <> "" Then
+        Search_Button_Click
+    Else
+        MsgBox "Please provide Username & Password.", vbExclamation
+    End If
+End Sub
+
+Private Sub btnUpdate()
     If btnUpdate_Enable = True Then
         If GN_Verify = inputUser Then
             Update_Worksheet
@@ -69,18 +70,8 @@ Private Sub btnUpdate_Click()
             MSG_Verify_Update
         End If
     Else
-        MsgBox ("Must search For entry before updating"), , "Nothing To Update"
+        ErrMsg_Search
     End If
-End Sub
-
-Sub ErrMsg()
-    MsgBox ("Username Not Found"), , "Not Found"
-    inputUser.SetFocus
-End Sub
-
-Sub ErrMsg_Duplicate()
-    MsgBox ("Username already in use"), , "Duplicate"
-    inputUser.SetFocus
 End Sub
 
 Private Sub Clear_Form()
@@ -106,16 +97,12 @@ Private Sub Update_Worksheet()
         
         'Password to be converted
         sIn = s
-        sSecret = ""        'secret key for StrToSHA512Salt only
+        sSecret = ""
         
-        'b64 = False   'output hex
-        b64 = True        'output base-64
+        b64 = True
         
         sH = SHA512(sIn, b64)
         
-        'message box and immediate window outputs
-        Debug.Print sH & vbNewLine & Len(sH) & " characters in length"
-        ' MsgBox sH & vbNewLine & Len(sH) & " characters in length"
         savePass = sH
         '/ Hash /'
         
@@ -126,14 +113,10 @@ Private Sub Update_Worksheet()
         statusLabel.Caption = "Status:"
         statusLabelLog.Caption = "Password Updated!"
         Status
-        
+        Clear_Form
     Else
-        MsgBox ("Must search For entry before updating"), , "Nothing To Update"
-        
+        ErrMsg_Search
     End If
-    
-    'btnUpdate_Enable = False 'Remove ' if you want to require searching again after an update.
-    
 End Sub
 
 Sub MSG_Verify_Update()
@@ -164,4 +147,18 @@ Private Sub Status()
     Loop
         statusLabel.Caption = ""
         statusLabelLog.Caption = ""
+End Sub
+
+'/ ------- Error Handles ------- /'
+Sub ErrMsg()
+    MsgBox ("Username Not Found."), , "Not Found"
+End Sub
+
+Sub ErrMsg_Duplicate()
+    MsgBox ("Username already in use."), , "Duplicate"
+End Sub
+
+Sub ErrMsg_Search()
+    MsgBox ("Must search for entry before updating."), vbInformation, "Error"
+    Clear_Form
 End Sub

@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} CreateAccount 
    Caption         =   "Create Account"
-   ClientHeight    =   5610
+   ClientHeight    =   6195
    ClientLeft      =   120
    ClientTop       =   465
-   ClientWidth     =   5175
+   ClientWidth     =   5445
    OleObjectBlob   =   "CreateAccount.frx":0000
    StartUpPosition =   2  'CenterScreen
 End
@@ -21,6 +21,20 @@ Private Sub UserForm_Activate()
     Me.Left = Application.Left + (0.5 * Application.Width) - (0.5 * Me.Width)
     Me.Top = Application.Top + (0.5 * Application.Height) - (0.5 * Me.Height)
 '/End Positioning /'
+End Sub
+
+Private Sub inputPass_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shift As Integer)
+    If KeyCode = vbKeyReturn Then
+        btnSubmit_Click
+    End If
+End Sub
+
+Private Sub btnSubmit_Click()
+    If inputUser <> "" And inputPass <> "" Then
+        btnCreate_Click
+    Else
+        MsgBox "Please provide Username & Password.", vbExclamation
+    End If
 End Sub
 
 Private Sub btnCreate_Click()
@@ -56,9 +70,7 @@ Private Sub btnCreate_Click()
         
         sH = SHA512(sIn, b64)
         
-        'message box and immediate window outputs
         Debug.Print sH & vbNewLine & Len(sH) & " characters in length"
-        ' MsgBox sH & vbNewLine & Len(sH) & " characters in length"
         savePass = sH
         '/ Hash /'
         
@@ -69,11 +81,6 @@ Private Sub btnCreate_Click()
         ws.Cells(r, "E") = userAddress
         ws.Cells(r, "F") = userPosition
         ws.Cells(r, "G") = userEmail
-        
-        Clear_Form
-        inputUser.SetFocus
-        Unload CreateAccount
-        AdminForm.Show
         
         '/Add to Users count/'
         Dim AddUser As Integer
@@ -91,20 +98,23 @@ Private Sub btnCreate_Click()
         Set ws = Sheets(List_Select)
         Set Worksheet_Set = ws
         
+        '/Status/'
+        statusLabel_fix.Caption = "Status:"
+        statusLabelLog.Caption = "Creating Account..."
+        Status
+        MsgBox ("Account Created."), , "Duplicate"
+        Clear_Form
     Else
         ErrMsg_Duplicate
     End If
-    
 End Sub
 
 Sub ErrMsg()
-    MsgBox ("Username Not Found"), , "Not Found"
-    inputUser.SetFocus
+    MsgBox ("Username Not Found."), , "Not Found"
 End Sub
 
 Sub ErrMsg_Duplicate()
-    MsgBox ("Username Taken"), , "Duplicate"
-    inputUser.SetFocus
+    MsgBox ("Username Taken."), , "Duplicate"
 End Sub
 
 Private Sub Clear_Form()
@@ -122,11 +132,12 @@ Private Sub btnBack_click()
     AdminForm.Show
 End Sub
 
+'/------- Display Status -------/'
 Private Sub Status()
     Dim startTime As Date
     Dim elapsedTime As Long
     Dim waitTimeInSeconds As Long
-    
+        
     waitTimeInSeconds = 2 'change this to the desired wait time in seconds
     
     startTime = Now
@@ -134,6 +145,6 @@ Private Sub Status()
         DoEvents 'allow the program to process any pending events
         elapsedTime = DateDiff("s", startTime, Now)
     Loop
-        statusLabel.Caption = ""
+        statusLabel_fix.Caption = ""
         statusLabelLog.Caption = ""
 End Sub
