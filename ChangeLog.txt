@@ -1,3 +1,13 @@
+v1.0.5
+Updated Error handling on Main Menu.
+Updated CompanyProfile form layout.
+Updated CreateAccount form layout.
+Update ChangePassword form, Search no longer needed.
+Fixed ChangePassword form crash error due to set focus code.
+Fixed ChangePassword form crashing when password is blank.
+Fixed CreateAccount form crash error due to set focus code.
+Fixed CreateAccount form crashing when password is blank.
+
 v1.0.4
 Added Version display to Menu & Admin Menu.
 Fixed ReportIssue requiring Email.
@@ -8,11 +18,11 @@ Added additional warning when formatting.
 
 v1.0.3
 Fixed error causing file corruption.
-Added Auto-Save feature to actions performed. (Disable Excels built in auto save)
-Signed Document
-Updated Admin Panel
+Added Auto-Save feature to actions performed. (Disable Excels built in auto save).
+Signed Document.
+Updated Admin Panel.
 
 v1.0.2
-Fixed Admin Panel login
-Fixed CompanyProfile Display
-Updated Format Menu
+Fixed Admin Panel login.
+Fixed CompanyProfile Display.
+Updated Format Menu.
