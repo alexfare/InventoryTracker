@@ -537,11 +537,11 @@ End Sub
 
 '/ ------- Error Handles ------- /'
 Sub ErrMsg()
-    MsgBox (""), vbInformation, "Not Found"
+    MsgBox ("Search cannot be blank."), vbInformation, "Not Found"
 End Sub
 
 Sub ErrMsg_Duplicate()
-    MsgBox ("Gage number already in use"), vbInformation, "Duplicate"
+    MsgBox ("Part Number already in use"), vbInformation, "Duplicate"
 End Sub
 
 Sub ErrMsg_Search()

@@ -1,8 +1,16 @@
+v1.0.6
+1. Fixed Login Tab Issue
+2. Fixed blank search error message missing.
+3. Fixed Receive In, On-Order & Usage tabs still attempted to process data even when they were blank.
+4. Updated ReportIssue layout.
+
+----Changing Log Format----
+
 v1.0.5
 Updated Error handling on Main Menu.
 Updated CompanyProfile form layout.
 Updated CreateAccount form layout.
-Update ChangePassword form, Search no longer needed.
+Updated ChangePassword form, Search no longer needed.
 Fixed ChangePassword form crash error due to set focus code.
 Fixed ChangePassword form crashing when password is blank.
 Fixed CreateAccount form crash error due to set focus code.
@@ -14,7 +22,6 @@ Fixed ReportIssue requiring Email.
 Fixed crash that happened if you tried to login without entering any information.
 Fixed crash that happened when formatting worksheet.
 Added additional warning when formatting.
-
 
 v1.0.3
 Fixed error causing file corruption.
