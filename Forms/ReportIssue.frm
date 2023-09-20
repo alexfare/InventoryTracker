@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ReportIssue 
    Caption         =   "Report Issue"
-   ClientHeight    =   4380
+   ClientHeight    =   4950
    ClientLeft      =   120
    ClientTop       =   465
-   ClientWidth     =   4695
+   ClientWidth     =   4770
    OleObjectBlob   =   "ReportIssue.frx":0000
    StartUpPosition =   2  'CenterScreen
 End
@@ -18,6 +18,14 @@ Private Sub UserForm_Activate()
     Me.Left = Application.Left + (0.5 * Application.Width) - (0.5 * Me.Width)
     Me.Top = Application.Top + (0.5 * Application.Height) - (0.5 * Me.Height)
 '/End Positioning /'
+
+    Dim Worksheet_Set
+    Dim ws As Worksheet
+    Dim List_Select
+    List_Select = "CreatedByAlexFare"
+    Set ws = Sheets(List_Select)
+    Set Worksheet_Set = ws
+    vDisplay = ws.Range("D1")
 End Sub
 
 Private Sub btnBack_click()

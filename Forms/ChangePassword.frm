@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ChangePassword 
    Caption         =   "Change Password"
-   ClientHeight    =   2520
+   ClientHeight    =   3525
    ClientLeft      =   120
    ClientTop       =   465
-   ClientWidth     =   3645
+   ClientWidth     =   3690
    OleObjectBlob   =   "ChangePassword.frx":0000
    StartUpPosition =   2  'CenterScreen
 End
@@ -17,6 +17,7 @@ Dim r As Long        ' variable used for storing row number
 Dim Worksheet_Set        ' variable used for selecting and storing the active worksheet
 Dim btnUpdate_Enable As Boolean        ' to store update enable flag after search
 Dim GN_Verify
+Dim PassMatch As Boolean
 
 Private Sub UserForm_Activate()
 '/Positioning /'
@@ -27,7 +28,7 @@ End Sub
 
 Private Sub inputPass_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shift As Integer)
     If KeyCode = vbKeyReturn Then
-        btnChangePassword_Click
+        btnUpdate_Click
     End If
 End Sub
 
@@ -50,33 +51,38 @@ Public Sub Search_Button_Click()
         statusLabel.Caption = "Status:"
         statusLabelLog.Caption = "Searching..."
         Status
-        btnUpdate
     End If
 End Sub
 
-Private Sub btnChangePassword_Click()
-    If inputUser <> "" And inputPass <> "" Then
+Private Sub btnUpdate_Click()
+    If inputUser <> "" And inputPass <> "" And inputPassx2 <> "" Then
         Search_Button_Click
     Else
-        MsgBox "Please provide Username & Password.", vbExclamation
+        MsgBox "Username and Password fields cannot be empty.", vbInformation, "Error"
     End If
-End Sub
-
-Private Sub btnUpdate()
+    If inputPass = inputPassx2 Then
+        PassMatch = True
+    Else
+        PassMatch = False
+    End If
     If btnUpdate_Enable = True Then
         If GN_Verify = inputUser Then
-            Update_Worksheet
+            If PassMatch = True Then
+                Update_Worksheet
+            Else
+                MsgBox "Passwords do not match.", vbInformation, "Error"
+            End If
         Else
             MSG_Verify_Update
         End If
     Else
-        ErrMsg_Search
     End If
 End Sub
 
 Private Sub Clear_Form()
     inputUser = ""
     inputPass = ""
+    inputPassx2 = ""
 End Sub
 
 Private Sub Update_Worksheet()

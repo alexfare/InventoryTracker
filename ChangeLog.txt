@@ -1,3 +1,11 @@
+v1.0.7
+1. Moved main audit log to admin only.
+2. Updated ChangePassword layout.
+3. Added password confirmation on ChangePassword form.
+4. Updated LoginForm layout.
+5. Updated ReportIssue layout.
+6. Fixed Errors on Main Menu.
+
 v1.0.6
 1. Fixed Login Tab Issue
 2. Fixed blank search error message missing.

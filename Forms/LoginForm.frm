@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} LoginForm 
    Caption         =   "Admin Login"
-   ClientHeight    =   2025
+   ClientHeight    =   2325
    ClientLeft      =   120
    ClientTop       =   465
-   ClientWidth     =   3825
+   ClientWidth     =   4170
    OleObjectBlob   =   "LoginForm.frx":0000
    StartUpPosition =   2  'CenterScreen
 End

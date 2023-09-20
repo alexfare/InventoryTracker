@@ -146,6 +146,7 @@ End Sub
 
 '/------- Receive In Button -------/'
 Private Sub Update_Button_Click()
+If receiveInput <> "" Then
     If Update_Button_Enable = True Then
         If GN_Verify = Gage_Number Then
             Update_Worksheet
@@ -154,6 +155,7 @@ Private Sub Update_Button_Click()
         End If
     Else
         ErrMsg_Search
+    End If
     End If
 End Sub
 
@@ -329,6 +331,7 @@ End Sub
 
 '/ ------- On-Order Tab ------- /'
 Private Sub OnOrder_Button_Click()
+If orderQty <> "" Then
     If Update_Button_Enable = True Then
         If GN_Verify = Gage_Number Then
             OnOrderSub
@@ -338,6 +341,7 @@ Private Sub OnOrder_Button_Click()
     Else
         ErrMsg_Search
     End If
+End If
 End Sub
 
 Private Sub OnOrderSub()
@@ -420,6 +424,7 @@ End Sub
 
 '/ ------- Usage Tab ------- /'
 Private Sub Usage_Button_Click()
+If txtUse <> "" Then
     If Update_Button_Enable = True Then
         If GN_Verify = Gage_Number Then
             UsageSub
@@ -429,6 +434,7 @@ Private Sub Usage_Button_Click()
     Else
         ErrMsg_Search
     End If
+End If
 End Sub
 
 Private Sub UsageSub()
