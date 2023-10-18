@@ -78,12 +78,8 @@ Private Sub btnUpdateUser_click()
     ChangePassword.Show
 End Sub
 
-Private Sub btnDevMode_click()
-    MsgBox "DevMode Coming Soon."
-End Sub
-
 Private Sub btnAbout_Click()
-    MsgBox "Code protection password Is GageTracker2022"
+    MsgBox "Simple Inventory Tracker For Excel."
 End Sub
 
 Private Sub auditBTN_Click()

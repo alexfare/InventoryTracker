@@ -519,21 +519,19 @@ End Sub
 
 '/ ------- Audit Log ------- /'
 Private Sub auditLog()
-    Dim Worksheet_Set        ' variable used for selecting and storing the active worksheet
-    Dim ws          As Worksheet
-    Dim List_Select
-    List_Select = "Audit"        ' Tab name
-    Set ws = Sheets(List_Select)
-    Set Worksheet_Set = ws
+    Dim ws As Worksheet
     Dim auditLog As String
-    Dim AuditAdd As String
-    Dim AuditDate As String
+    Dim auditAdd As String
+    Dim auditDate As String
     
-    auditLog = ws.Range("A2")
-    AuditDate = Now
-    AuditAdd = " ||| Date: " + AuditDate + " User: " + AuditUser + " Action: " + ActionLog + " ||| "
-    auditLog = auditLog + " " + AuditAdd
-    ws.Range("A2") = auditLog
+    Set ws = ThisWorkbook.Sheets("Audit")
+
+    auditLog = ws.Range("A2").Value
+    auditDate = Now
+    auditAdd = " ||| Date: " & auditDate & vbCrLf & " User: " & AuditUser & vbCrLf & " Action: " & ActionLog & " ||| " & vbCrLf & " "
+    auditLog = auditLog & vbCrLf & auditAdd
+    
+    ws.Range("A2").Value = auditLog
 End Sub
 
 Private Sub auditBTN_Click()

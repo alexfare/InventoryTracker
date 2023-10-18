@@ -1,3 +1,9 @@
+v1.0.8
+1. Updated Layout.
+2. Updated Format Settings.
+3. Updated Audit Log to be more readable.
+4. Fixed Audit Log not clearing on format.
+
 v1.0.7
 1. Moved main audit log to admin only.
 2. Updated ChangePassword layout.
