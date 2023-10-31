@@ -1,3 +1,8 @@
+v1.0.9
+1. Updated Main Menu coding errors.
+2. Updated Audit Log.
+3. Added more details to Audit Log.
+
 v1.0.8
 1. Updated Layout.
 2. Updated Format Settings.

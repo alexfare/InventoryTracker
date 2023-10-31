@@ -19,10 +19,11 @@ Dim r As Long        ' variable used for storing row number
 Dim Worksheet_Set        ' variable used for selecting and storing the active worksheet
 Dim Update_Button_Enable As Boolean        ' to store update enable flag after search
 Dim GN_Verify
-Dim currrentUser As String
+Dim currentUser As String
 Dim ActionLog As String
 Dim AuditTime As String
 Dim AuditUser As String
+Dim AuditPart As String
 
 Private Sub UserForm_Activate()
 '/Positioning /'
@@ -51,12 +52,7 @@ Public Sub Search_Button_Click()
     Dim DateEdit 'Update Last searched
     Dim Gage_Number_Save
     
-    ' clear previous data from form, except "Gage Number"
-    ' --------------------------------------------------------
-    Gage_Number_Save = Gage_Number
-    Clear_Form
-    Gage_Number = Gage_Number_Save
-    ' ---------------------------------------------------------
+    Clear_Form ' clear previous data from form, except "Gage Number"
     
     List_Select = "CreatedByAlexFare"
     Set ws = Sheets(List_Select)
@@ -99,6 +95,7 @@ Public Sub Search_Button_Click()
         ActionLog = "Searched"
         AuditTime = Now
         AuditUser = Application.userName
+        AuditPart = Gage_Number
         auditLog
                 
         '/Status/'
@@ -111,9 +108,14 @@ Public Sub Search_Button_Click()
     End If
 End Sub
 
+'/ Clear Button
+Private Sub btnClear_Click()
+    Gage_Number = ""
+    Clear_Form
+End Sub
+
 '/ ------- Clear Button ------- /'
 Private Sub Clear_Form()
-    Gage_Number = ""
     Descriptiontxt = ""
     inventoryTxt = ""
     onOrder = ""
@@ -200,8 +202,8 @@ Private Sub Update_Worksheet()
         ws.Cells(r, "D") = onOrder
         
         '/ Audit Log
-        currrentUser = Application.userName
-        lastUser = currrentUser
+        currentUser = Application.userName
+        lastUser = currentUser
         ws.Cells(r, "AN") = lastUser
         ws.Cells(r, "AL") = lblDateEdit
         lblReceivedIn = Now
@@ -226,6 +228,7 @@ Private Sub Update_Worksheet()
     ActionLog = "Received In"
     AuditTime = Now
     AuditUser = Application.userName
+    AuditPart = Gage_Number
     auditLog
     '/ End Audit Log /'
     
@@ -250,11 +253,6 @@ Sub MSG_Verify_Update()
     Else
         Gage_Number = GN_Verify
     End If
-End Sub
-
-'/ Clear Button
-Private Sub btnClear_Click()
-    Clear_Form
 End Sub
 
 Private Sub btnSave_click()
@@ -379,8 +377,8 @@ If Update_Button_Enable = True Then
         ws.Cells(r, "D") = onOrder
         
         '/ Audit Log
-        currrentUser = Application.userName
-        lastUser = currrentUser
+        currentUser = Application.userName
+        lastUser = currentUser
         ws.Cells(r, "AN") = lastUser
         ws.Cells(r, "AL") = lblDateEdit
         lblOrderEntry = Now
@@ -405,6 +403,7 @@ If Update_Button_Enable = True Then
     ActionLog = "Order Entry"
     AuditTime = Now
     AuditUser = Application.userName
+    AuditPart = Gage_Number
     auditLog
     '/ End Audit Log /'
     
@@ -468,8 +467,8 @@ If Update_Button_Enable = True Then
         ws.Cells(r, "C") = inventoryTxt
         
         '/ Audit Log
-        currrentUser = Application.userName
-        lastUser = currrentUser
+        currentUser = Application.userName
+        lastUser = currentUser
         ws.Cells(r, "AN") = lastUser
         ws.Cells(r, "AL") = lblDateEdit
         lblUsageReport = Now
@@ -499,7 +498,7 @@ If Update_Button_Enable = True Then
     ActionLog = "Usage Report"
     AuditTime = Now
     AuditUser = Application.userName
-    'AuditStatus
+    AuditPart = Gage_Number
     auditLog
     '/ End Audit Log /'
     
@@ -528,7 +527,7 @@ Private Sub auditLog()
 
     auditLog = ws.Range("A2").Value
     auditDate = Now
-    auditAdd = " ||| Date: " & auditDate & vbCrLf & " User: " & AuditUser & vbCrLf & " Action: " & ActionLog & " ||| " & vbCrLf & " "
+    auditAdd = "Date: " & auditDate & vbCrLf & " User: " & AuditUser & vbCrLf & " Action: " & ActionLog & " " & AuditPart & vbCrLf & " "
     auditLog = auditLog & vbCrLf & auditAdd
     
     ws.Range("A2").Value = auditLog
@@ -552,3 +551,6 @@ Sub ErrMsg_Search()
     MsgBox ("Must search for entry before updating."), vbInformation, "Error"
     Clear_Form
 End Sub
+
+
+

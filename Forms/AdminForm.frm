@@ -17,7 +17,6 @@ Dim r As Long ' variable used for storing row number
 Dim Worksheet_Set ' variable used for selecting and storing the active worksheet
 Dim Update_Button_Enable As Boolean ' to store update enable flag after search
 Dim GN_Verify
-Dim currrentUser    As String
 Dim rlStatus As Integer
 
 Private Sub UserForm_Initialize()
@@ -102,3 +101,4 @@ End Sub
 Private Sub btnCompanyProfile_Click()
     CompanyProfile.Show
 End Sub
+
