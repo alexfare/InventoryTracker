@@ -1,3 +1,14 @@
+v1.0.10
+Fixed Main Menu code not saving out from last update.
+Updated Main Menu Text - Tip caption correction.
+Updated MainMenu color format.
+Updated LoginForm Layout.
+Updated AdminForm Layout - Layout error correction.
+Updated CompanyProfile form layout.
+Updated CreateAccount form - Password Confirmation Added.
+Updated Format Form - Clearing Audit Log Error Issue.
+Added an auto save on start up to keep audit log more accurate.
+
 v1.0.9
 1. Updated Main Menu coding errors.
 2. Updated Audit Log.

@@ -62,9 +62,10 @@ Dim List_Select
     Set Worksheet_Set = ws
     Dim i As Integer
     
-    For i = 2 To 999
-        ws.Range("A" & i).ClearContents
+    For i = 999 To 3 Step -1
+        ws.Rows(i).EntireRow.Delete
     Next i
+    
     MsgBox "Cleared Audit Logs."
 End Sub
 

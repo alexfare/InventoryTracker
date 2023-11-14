@@ -50,7 +50,6 @@ End Sub
 Public Sub Search_Button_Click()
     Dim ws          As Worksheet
     Dim DateEdit 'Update Last searched
-    Dim Gage_Number_Save
     
     Clear_Form ' clear previous data from form, except "Gage Number"
     
@@ -551,6 +550,7 @@ Sub ErrMsg_Search()
     MsgBox ("Must search for entry before updating."), vbInformation, "Error"
     Clear_Form
 End Sub
+
 
 
 

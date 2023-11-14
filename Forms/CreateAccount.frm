@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} CreateAccount 
    Caption         =   "Create Account"
-   ClientHeight    =   6195
+   ClientHeight    =   7080
    ClientLeft      =   120
    ClientTop       =   465
    ClientWidth     =   5445
@@ -15,12 +15,14 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Dim r As Long ' variable used for storing row number
 Dim Worksheet_Set ' variable used for selecting and storing the active worksheet
+Dim PassMatch As Boolean
 
 Private Sub UserForm_Activate()
 '/Positioning /'
     Me.Left = Application.Left + (0.5 * Application.Width) - (0.5 * Me.Width)
     Me.Top = Application.Top + (0.5 * Application.Height) - (0.5 * Me.Height)
 '/End Positioning /'
+inputUser.SetFocus
 End Sub
 
 Private Sub inputPass_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shift As Integer)
@@ -30,10 +32,18 @@ Private Sub inputPass_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shif
 End Sub
 
 Private Sub btnSubmit_Click()
-    If inputUser <> "" And inputPass <> "" Then
+    If inputUser <> "" And inputPass <> "" And inputPassx2 <> "" Then
+        PasswordMatch
+    Else
+        MsgBox "Username And Password Inputs Cannot Be Blank.", vbExclamation
+    End If
+End Sub
+
+Private Sub PasswordMatch()
+    If inputPass = inputPassx2 Then
         btnCreate_Click
     Else
-        MsgBox "Please provide Username & Password.", vbExclamation
+        MsgBox "Passwords Do Not Match.", vbInformation, "Error"
     End If
 End Sub
 
@@ -120,6 +130,7 @@ End Sub
 Private Sub Clear_Form()
     inputUser = ""
     inputPass = ""
+    inputPassx2 = ""
     userName = ""
     userPhone = ""
     userAddress = ""
