@@ -1,3 +1,7 @@
+v1.1.0
+Updated MainMenu Layout.
+Updated AdminPanel Layout.
+
 v1.0.10
 Fixed Main Menu code not saving out from last update.
 Updated Main Menu Text - Tip caption correction.
