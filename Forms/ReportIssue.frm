@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ReportIssue 
    Caption         =   "Report Issue"
-   ClientHeight    =   4950
+   ClientHeight    =   5100
    ClientLeft      =   120
    ClientTop       =   465
    ClientWidth     =   4770
@@ -26,6 +26,7 @@ Private Sub UserForm_Activate()
     Set ws = Sheets(List_Select)
     Set Worksheet_Set = ws
     vDisplay = ws.Range("D1")
+    inputName.SetFocus
 End Sub
 
 Private Sub btnBack_click()
@@ -36,7 +37,7 @@ End Sub
 Private Sub btnSubmit_Click()
     ' Check if the user provided input
     If inputName <> "" And inputDescription <> "" Then
-    Send_Emails
+        Send_Emails
     Else
         MsgBox "Please provide all the required information.", vbExclamation
     End If

@@ -1,3 +1,8 @@
+v1.1.1
+Updating some code with small corrections.
+Updated ReportIssue Form. - Added MultiLine and Scrolling to comment.
+Updated CreateAccount Layout.
+
 v1.1.0
 Updated MainMenu Layout.
 Updated AdminPanel Layout.
