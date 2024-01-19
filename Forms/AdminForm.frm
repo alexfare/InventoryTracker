@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} AdminForm 
    Caption         =   "Admin Panel  - Created By Alex Fare"
-   ClientHeight    =   4065
+   ClientHeight    =   5985
    ClientLeft      =   120
    ClientTop       =   465
-   ClientWidth     =   6375
+   ClientWidth     =   4560
    OleObjectBlob   =   "AdminForm.frx":0000
    StartUpPosition =   2  'CenterScreen
 End
@@ -13,6 +13,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+
 Dim r As Long ' variable used for storing row number
 Dim Worksheet_Set ' variable used for selecting and storing the active worksheet
 Dim Update_Button_Enable As Boolean ' to store update enable flag after search
@@ -82,7 +83,7 @@ Private Sub btnAbout_Click()
 End Sub
 
 Private Sub auditBTN_Click()
-    Unload Menu
+    Unload AdminForm
     Worksheets("Audit").Activate
 End Sub
 
@@ -102,3 +103,12 @@ Private Sub btnCompanyProfile_Click()
     CompanyProfile.Show
 End Sub
 
+Private Sub btnSAdmin_Click()
+    Unload AdminForm
+    Worksheets("Admin").Activate
+End Sub
+
+Private Sub btnSCred_Click()
+    Unload AdminForm
+    Worksheets("Credentials").Activate
+End Sub

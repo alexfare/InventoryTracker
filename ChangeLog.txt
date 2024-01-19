@@ -1,3 +1,9 @@
+v1.1.2
+Fixed some exporting errors.
+Removed unused sheets.
+Added Database view to Adminform.
+Fixed AuditLog not closing Adminform.
+
 v1.1.1
 Updating some code with small corrections.
 Updated ReportIssue Form. - Added MultiLine and Scrolling to comment.
