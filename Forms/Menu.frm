@@ -24,6 +24,7 @@ Dim ActionLog As String
 Dim AuditTime As String
 Dim AuditUser As String
 Dim AuditPart As String
+Dim updateMode As Boolean
 
 Private Sub UserForm_Activate()
 '/Positioning /'
@@ -40,7 +41,7 @@ Private Sub UserForm_Activate()
     vDisplay = ws.Range("D1")
 End Sub
 
-Private Sub Gage_Number_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shift As Integer)
+Private Sub Item_Name_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shift As Integer)
     If KeyCode = vbKeyReturn Then
         Search_Button_Click
     End If
@@ -51,33 +52,33 @@ Public Sub Search_Button_Click()
     Dim ws          As Worksheet
     Dim DateEdit 'Update Last searched
     
-    Clear_Form ' clear previous data from form, except "Gage Number"
+    Clear_Form ' clear previous data from form, except "Item Number"
     
     List_Select = "CreatedByAlexFare"
     Set ws = Sheets(List_Select)
     Set Worksheet_Set = ws
     
-    If IsError(Application.Match(IIf(IsNumeric(Gage_Number), Val(Gage_Number), Gage_Number), ws.Columns(1), 0)) Then
+    If IsError(Application.Match(IIf(IsNumeric(Item_Name), Val(Item_Name), Item_Name), ws.Columns(1), 0)) Then
         Update_Button_Enable = False
         ErrMsg
     Else
-        r = Application.Match(IIf(IsNumeric(Gage_Number), Val(Gage_Number), Gage_Number), ws.Columns(1), 0)
-        GN_Verify = Gage_Number
+        r = Application.Match(IIf(IsNumeric(Item_Name), Val(Item_Name), Item_Name), ws.Columns(1), 0)
+        GN_Verify = Item_Name
         Descriptiontxt = ws.Cells(r, "B")
         inventoryTxt = ws.Cells(r, "C")
         onOrder = ws.Cells(r, "D")
         
         '/Receive Page/'
-        txtProduct = Gage_Number
+        txtProduct = Item_Name
         txtCurrentQty = inventoryTxt
         
         '/Order Page/'
-        OrderProductTxt = Gage_Number
+        OrderProductTxt = Item_Name
         currentInventory = inventoryTxt
         currentOnOrdertxt = onOrder
         
         '/Usage Page/'
-        UsageProduct = Gage_Number
+        UsageProduct = Item_Name
         UsageCurrent = inventoryTxt
         UsageOnOrder = onOrder
         
@@ -94,7 +95,7 @@ Public Sub Search_Button_Click()
         ActionLog = "Searched"
         AuditTime = Now
         AuditUser = Application.userName
-        AuditPart = Gage_Number
+        AuditPart = Item_Name
         auditLog
                 
         '/Status/'
@@ -109,7 +110,7 @@ End Sub
 
 '/ Clear Button
 Private Sub btnClear_Click()
-    Gage_Number = ""
+    Item_Name = ""
     Clear_Form
 End Sub
 
@@ -149,7 +150,7 @@ End Sub
 Private Sub Update_Button_Click()
 If receiveInput <> "" Then
     If Update_Button_Enable = True Then
-        If GN_Verify = Gage_Number Then
+        If GN_Verify = Item_Name Then
             Update_Worksheet
         Else
             MSG_Verify_Update
@@ -164,10 +165,10 @@ Private Sub Update_Worksheet()
     If Update_Button_Enable = True Then
         Dim gnString As String
         Set ws = Worksheet_Set
-        If IsNumeric(Gage_Number) Then
-            gnString = Val(Gage_Number.Value)
+        If IsNumeric(Item_Name) Then
+            gnString = Val(Item_Name.Value)
         Else
-            gnString = Gage_Number
+            gnString = Item_Name
         End If
     Dim userInputr As String
     Dim userInputo As String
@@ -227,7 +228,7 @@ Private Sub Update_Worksheet()
     ActionLog = "Received In"
     AuditTime = Now
     AuditUser = Application.userName
-    AuditPart = Gage_Number
+    AuditPart = Item_Name
     auditLog
     '/ End Audit Log /'
     
@@ -250,7 +251,7 @@ Sub MSG_Verify_Update()
     If MSG1 = vbYes Then
         Update_Worksheet
     Else
-        Gage_Number = GN_Verify
+        Item_Name = GN_Verify
     End If
 End Sub
 
@@ -330,7 +331,7 @@ End Sub
 Private Sub OnOrder_Button_Click()
 If orderQty <> "" Then
     If Update_Button_Enable = True Then
-        If GN_Verify = Gage_Number Then
+        If GN_Verify = Item_Name Then
             OnOrderSub
         Else
             MSG_Verify_Update
@@ -345,10 +346,10 @@ Private Sub OnOrderSub()
 If Update_Button_Enable = True Then
         Dim gnString As String
         Set ws = Worksheet_Set
-        If IsNumeric(Gage_Number) Then
-            gnString = Val(Gage_Number.Value)
+        If IsNumeric(Item_Name) Then
+            gnString = Val(Item_Name.Value)
         Else
-            gnString = Gage_Number
+            gnString = Item_Name
         End If
     Dim InputOrderQty As String
     Dim userInputo As String
@@ -402,7 +403,7 @@ If Update_Button_Enable = True Then
     ActionLog = "Order Entry"
     AuditTime = Now
     AuditUser = Application.userName
-    AuditPart = Gage_Number
+    AuditPart = Item_Name
     auditLog
     '/ End Audit Log /'
     
@@ -424,7 +425,7 @@ End Sub
 Private Sub Usage_Button_Click()
 If txtUse <> "" Then
     If Update_Button_Enable = True Then
-        If GN_Verify = Gage_Number Then
+        If GN_Verify = Item_Name Then
             UsageSub
         Else
             MSG_Verify_Update
@@ -439,10 +440,10 @@ Private Sub UsageSub()
 If Update_Button_Enable = True Then
         Dim gnString As String
         Set ws = Worksheet_Set
-        If IsNumeric(Gage_Number) Then
-            gnString = Val(Gage_Number.Value)
+        If IsNumeric(Item_Name) Then
+            gnString = Val(Item_Name.Value)
         Else
-            gnString = Gage_Number
+            gnString = Item_Name
         End If
     Dim InputUsageQty As String
     Dim userInputu As String
@@ -497,7 +498,7 @@ If Update_Button_Enable = True Then
     ActionLog = "Usage Report"
     AuditTime = Now
     AuditUser = Application.userName
-    AuditPart = Gage_Number
+    AuditPart = Item_Name
     auditLog
     '/ End Audit Log /'
     
@@ -532,11 +533,6 @@ Private Sub auditLog()
     ws.Range("A2").Value = auditLog
 End Sub
 
-Private Sub auditBTN_Click()
-    Unload Menu
-    Worksheets("Audit").Activate
-End Sub
-
 '/ ------- Error Handles ------- /'
 Sub ErrMsg()
     MsgBox ("Search cannot be blank."), vbInformation, "Not Found"
@@ -550,7 +546,3 @@ Sub ErrMsg_Search()
     MsgBox ("Must search for entry before updating."), vbInformation, "Error"
     Clear_Form
 End Sub
-
-
-
-
