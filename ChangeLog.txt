@@ -1,3 +1,6 @@
+v1.1.6
+Updates didn't export correctly from v1.1.5
+
 v1.1.5
 Updated ChangePassword Input box (Changed to a dropdown).
 Fixed Enter key on ChangePassword.
