@@ -13,6 +13,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+
 Dim r As Long ' variable used for storing row number
 Dim Worksheet_Set ' variable used for selecting and storing the active worksheet
 Dim PassMatch As Boolean

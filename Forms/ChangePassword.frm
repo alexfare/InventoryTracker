@@ -26,7 +26,7 @@ Private Sub UserForm_Activate()
 '/End Positioning /'
 End Sub
 
-Private Sub inputPass_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shift As Integer)
+Private Sub inputPassx2_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shift As Integer)
     If KeyCode = vbKeyReturn Then
         btnUpdate_Click
     End If

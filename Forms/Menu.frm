@@ -529,29 +529,10 @@ Private Sub auditLog()
     auditDate = Now
     auditAdd = "Date: " & auditDate & vbCrLf & " User: " & AuditUser & vbCrLf & " Action: " & ActionLog & " " & AuditPart & vbCrLf & " "
     auditLog = auditLog & vbCrLf & auditAdd
-    AddAuditLog
+    
+    ws.Range("A2").Value = auditLog
 End Sub
 
-Private Sub AddAuditLog()
-    Dim Worksheet_Set        ' variable used for selecting and storing the active worksheet
-    Dim ws As Worksheet
-    Dim List_Select
-    Dim AuditActionReport As String
-    Dim lLastRow As Long        ' lLastRow = variable to store the result of the row count calculation
-    
-    List_Select = "Audit"
-    Set ws = Sheets(List_Select)
-    Set Worksheet_Set = ws
-    Audit_Number = Now
-    
-    lLastRow = ws.ListObjects.Item(1).ListRows.Count
-    r = lLastRow + 3        ' Add number for every header tab created
-    AuditActionReport = ActionLog & " " & AuditPart
-        
-    ws.Cells(r, "A") = Audit_Number
-    ws.Cells(r, "B") = AuditUser
-    ws.Cells(r, "C") = AuditActionReport
-End Sub
 '/ ------- Error Handles ------- /'
 Sub ErrMsg()
     MsgBox ("Search cannot be blank."), vbInformation, "Not Found"
